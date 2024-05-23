@@ -8,7 +8,8 @@
 #include "panima/player.hpp"
 #include "panima/animation.hpp"
 #include "panima/channel.hpp"
-#include <udm.hpp>
+
+import udm;
 
 std::shared_ptr<panima::Player> panima::Player::Create() { return std::shared_ptr<Player> {new Player {}}; }
 std::shared_ptr<panima::Player> panima::Player::Create(const Player &other) { return std::shared_ptr<Player> {new Player {other}}; }

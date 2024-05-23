@@ -7,8 +7,10 @@
 
 #include <sharedutils/util.h>
 #include <sharedutils/magic_enum.hpp>
-#include <udm_types.hpp>
-#include <udm_trivial_types.hpp>
+#include <mathutil/umath.h>
+#include <mathutil/uquat.h>
+
+import udm;
 
 namespace panima {
 	template<typename T>

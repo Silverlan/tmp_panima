@@ -9,9 +9,12 @@
 #include <exprtk.hpp>
 #include <mathutil/uvec.h>
 #include <mathutil/perlin_noise.hpp>
-#include <udm.hpp>
-
 #include <utility>
+#include <array>
+#include <variant>
+
+import udm;
+
 namespace panima {
 	struct Channel;
 	struct TimeFrame;

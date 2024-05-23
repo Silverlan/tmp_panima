@@ -10,10 +10,12 @@
 
 #include "panima/types.hpp"
 #include "panima/slice.hpp"
+#include <mathutil/umath.h>
 #include <sharedutils/util_string_hash.hpp>
-#include <udm.hpp>
 #include <vector>
 #include <memory>
+
+import udm;
 
 namespace panima {
 	struct AnimationPlayerCallbackInterface {

@@ -7,8 +7,9 @@
 
 #include "panima/animation.hpp"
 #include "panima/channel.hpp"
-#include <udm.hpp>
 #include <mathutil/umath.h>
+
+import udm;
 
 panima::Channel *panima::Animation::AddChannel(std::string path, udm::Type valueType)
 {

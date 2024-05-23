@@ -10,7 +10,8 @@
 
 #include <vector>
 #include <iostream>
-#include <udm_types.hpp>
+
+import udm;
 
 namespace panima {
 	struct Slice {

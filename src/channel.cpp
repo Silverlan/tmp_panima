@@ -8,10 +8,12 @@
 #include "panima/channel.hpp"
 #include "panima/channel_t.hpp"
 #include "value_expression.hpp"
-#include <udm.hpp>
 #include <sharedutils/util_uri.hpp>
 #include <sharedutils/util_string.h>
 #include <bezier_fit.hpp>
+
+import udm;
+
 panima::ChannelPath::ChannelPath(const std::string &ppath)
 {
 	uriparser::Uri uri {ppath};

@@ -6,7 +6,8 @@
 #define __PANIMA_CHANNEL_T_HPP__
 
 #include "panima/channel.hpp"
-#include <udm.hpp>
+
+import udm;
 
 namespace panima {
 	constexpr auto ANIMATION_CHANNEL_TYPE_POSITION = udm::Type::Vector3;

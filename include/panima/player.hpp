@@ -10,12 +10,13 @@
 #include "slice.hpp"
 #include "types.hpp"
 #include <mathutil/umath.h>
-#include <udm_types.hpp>
 #include <vector>
 #include <memory>
 
 #undef GetCurrentTime
 // #define PRAGMA_ENABLE_ANIMATION_SYSTEM_2
+
+import udm;
 
 class Model;
 namespace panima {

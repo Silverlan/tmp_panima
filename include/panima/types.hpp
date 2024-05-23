@@ -13,8 +13,8 @@
 #include <functional>
 #include <limits>
 #include <sharedutils/magic_enum.hpp>
-#include <udm_types.hpp>
-#include <udm_trivial_types.hpp>
+
+import udm;
 
 namespace panima {
 	enum class PlaybackFlags : uint32_t {
