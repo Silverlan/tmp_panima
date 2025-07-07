@@ -473,9 +473,21 @@ T panima::Channel::GetInterpolatedValue(float t, uint32_t &inOutPivotTimeIndex, 
 	inOutPivotTimeIndex = indices.first;
 	auto &v0 = GetValue<T>(indices.first);
 	auto &v1 = GetValue<T>(indices.second);
-	T v;
-	interpFunc(&v0, &v1, factor, &v);
-	return v;
+	if constexpr(std::is_same_v<T, Vector2>) {
+		T v {0.f, 0.f};
+		interpFunc(&v0, &v1, factor, &v);
+		return v;
+	}
+	else if constexpr(std::is_same_v<T, Vector4>) {
+		T v {0.f, 0.f, 0.f, 0.f};
+		interpFunc(&v0, &v1, factor, &v);
+		return v;
+	}
+	else {
+		T v;
+		interpFunc(&v0, &v1, factor, &v);
+		return v;
+	}
 }
 
 template<typename T, bool VALIDATE>
@@ -516,7 +528,19 @@ T panima::Channel::GetInterpolatedValue(float t, void (*interpFunc)(const void *
 	auto indices = FindInterpolationIndices(t, factor);
 	auto &v0 = GetValue<T>(indices.first);
 	auto &v1 = GetValue<T>(indices.second);
-	T v;
-	interpFunc(&v0, &v1, factor, &v);
-	return v;
+	if constexpr(std::is_same_v<T, Vector2>) {
+		T v {0.f, 0.f};
+		interpFunc(&v0, &v1, factor, &v);
+		return v;
+	}
+	else if constexpr(std::is_same_v<T, Vector4>) {
+		T v {0.f, 0.f, 0.f, 0.f};
+		interpFunc(&v0, &v1, factor, &v);
+		return v;
+	}
+	else {
+		T v;
+		interpFunc(&v0, &v1, factor, &v);
+		return v;
+	}
 }
