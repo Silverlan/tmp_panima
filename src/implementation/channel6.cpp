@@ -30,7 +30,7 @@ uint32_t panima::Channel::InsertValues(uint32_t n, const float *times, const voi
 		auto tStart = times[0];
 		auto tEnd = times[n - 1];
 		return udm::visit_ng(GetValueType(), [this, tStart, tEnd, n, times, values, valueStride, offset, flags](auto tag) {
-			using T = typename decltype(tag)::type;
+			/*using T = typename decltype(tag)::type;
 			using TValue = std::conditional_t<std::is_same_v<T, bool>, uint8_t, T>;
 			std::vector<float> newTimes;
 			std::vector<TValue> newValues;
@@ -48,7 +48,8 @@ uint32_t panima::Channel::InsertValues(uint32_t n, const float *times, const voi
 
 			auto newFlags = flags;
 			umath::set_flag(newFlags, InsertFlags::ClearExistingDataInRange);
-			return InsertValues(mergedTimes.size(), mergedTimes.data(), mergedValues.data(), valueStride, offset, newFlags);
+			return InsertValues(mergedTimes.size(), mergedTimes.data(), mergedValues.data(), valueStride, offset, newFlags);*/
+			return 0;
 		});
 	}
 	auto startTime = times[0];
