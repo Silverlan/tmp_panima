@@ -91,7 +91,7 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 		using T = typename decltype(tag)::type;
 		using TValue = std::conditional_t<std::is_same_v<T, bool>, uint8_t, T>;
 		if constexpr(is_animatable_type(udm::type_to_enum<TValue>())) {
-			std::vector<float> times;
+			/*std::vector<float> times;
 			std::vector<TValue> values;
 			GetDataInRange<TValue>(tStart, tEnd, times, values);
 
@@ -130,7 +130,7 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 				auto &cValues = newValues[c];
 				auto &cTimes = newTimes[c];
 				InsertValues<TValue>(cTimes.size(), cTimes.data(), cValues.data(), 0.f, InsertFlags::None);
-			}
+			}*/
 		}
 	});
 }
