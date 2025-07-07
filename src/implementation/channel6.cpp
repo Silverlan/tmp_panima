@@ -14,6 +14,7 @@ import bezierfit;
 
 import :channel;
 import :expression;
+
 uint32_t panima::Channel::InsertValues(uint32_t n, const float *times, const void *values, size_t valueStride, float offset, InsertFlags flags)
 {
 	if(n == 0)
@@ -87,79 +88,3 @@ uint32_t panima::Channel::InsertValues(uint32_t n, const float *times, const voi
 		Decimate(startTime, endTime);
 	return startIndex;
 }
-uint32_t panima::Channel::AddValue(float t, const void *value)
-{
-	float interpFactor;
-	auto indices = FindInterpolationIndices(t, interpFactor);
-	if(indices.first == std::numeric_limits<decltype(indices.first)>::max()) {
-		auto size = GetSize() + 1;
-		Resize(size);
-		auto idx = size - 1;
-		GetTimesArray()[idx] = t;
-		GetValueArray()[idx] = value;
-		return idx;
-	}
-	if(umath::abs(t - *GetTime(indices.first)) < VALUE_EPSILON) {
-		// Replace value at first index with new value
-		auto idx = indices.first;
-		GetTimesArray()[idx] = t;
-		GetValueArray()[idx] = value;
-		return idx;
-	}
-	if(umath::abs(t - *GetTime(indices.second)) < VALUE_EPSILON) {
-		// Replace value at second index with new value
-		auto idx = indices.second;
-		GetTimesArray()[idx] = t;
-		GetValueArray()[idx] = value;
-		return idx;
-	}
-	auto &times = GetTimesArray();
-	auto &values = GetValueArray();
-	if(indices.first == indices.second) {
-		if(indices.first == 0 && t < times.GetValue<float>(0)) {
-			// New time value preceeds first time value in time array, push front
-			auto idx = indices.first;
-			times.InsertValue(idx, t);
-			udm::visit_ng(GetValueType(), [&values, idx, value](auto tag) {
-				using T = typename decltype(tag)::type;
-				values.InsertValue(idx, *static_cast<const T *>(value));
-			});
-			UpdateLookupCache();
-			return idx;
-		}
-		// New time value exceeds last time value in time array, push back
-		auto idx = indices.second + 1;
-		times.InsertValue(idx, t);
-		udm::visit_ng(GetValueType(), [&values, idx, value](auto tag) {
-			using T = typename decltype(tag)::type;
-			values.InsertValue(idx, *static_cast<const T *>(value));
-		});
-		UpdateLookupCache();
-		return idx;
-	}
-	// Insert new value between the two indices
-	auto idx = indices.second;
-	times.InsertValue(idx, t);
-	udm::visit_ng(GetValueType(), [&values, idx, value](auto tag) {
-		using T = typename decltype(tag)::type;
-		values.InsertValue(idx, *static_cast<const T *>(value));
-	});
-	UpdateLookupCache();
-	return idx;
-}
-void panima::Channel::UpdateLookupCache()
-{
-	m_timesArray = m_times->GetValuePtr<udm::Array>();
-	m_valueArray = m_values->GetValuePtr<udm::Array>();
-	m_timesData = !m_timesArray->IsEmpty() ? m_timesArray->GetValuePtr<float>(0) : nullptr;
-	m_valueData = !m_valueArray->IsEmpty() ? m_valueArray->GetValuePtr(0) : nullptr;
-
-	if(m_timesArray->GetArrayType() == udm::ArrayType::Compressed)
-		static_cast<udm::ArrayLz4 *>(m_timesArray)->SetUncompressedMemoryPersistent(true);
-	if(m_valueArray->GetArrayType() == udm::ArrayType::Compressed)
-		static_cast<udm::ArrayLz4 *>(m_valueArray)->SetUncompressedMemoryPersistent(true);
-}
-udm::Array &panima::Channel::GetTimesArray() { return *m_timesArray; }
-udm::Array &panima::Channel::GetValueArray() { return *m_valueArray; }
-udm::Type panima::Channel::GetValueType() const { return GetValueArray().GetValueType(); }
-void panima::Channel::SetValueType(udm::Type type) { GetValueArray().SetValueType(type); }
