@@ -93,8 +93,11 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 		using TValue = std::conditional_t<std::is_same_v<T, bool>, uint8_t, T>;
 		if constexpr(is_animatable_type(udm::type_to_enum<TValue>())) {
 			std::vector<float> times;
-			std::vector<TValue> values;
-			values.resize(5);
+			
+			// If it doesnt error anymore, the error is caused by these two lines!
+			//std::vector<TValue> values;
+			//values.resize(5);
+			
 			//GetDataInRange<TValue>(tStart, tEnd, times, values);
 
 			// We need to decimate each component of the value separately, then merge the reduced values
