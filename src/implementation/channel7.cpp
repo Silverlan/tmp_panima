@@ -97,7 +97,7 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 			GetDataInRange<TValue>(tStart, tEnd, times, values);
 
 			// We need to decimate each component of the value separately, then merge the reduced values
-			auto valueType = GetValueType();
+			/*auto valueType = GetValueType();
 			auto numComp = udm::get_numeric_component_count(valueType);
 			std::vector<std::vector<float>> newTimes;
 			std::vector<std::vector<TValue>> newValues;
@@ -127,7 +127,7 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 			ClearRange(tStart, tEnd, true);
 
 			// Merge components back together
-			/*for(auto c = decltype(numComp) {0u}; c < numComp; ++c) {
+			for(auto c = decltype(numComp) {0u}; c < numComp; ++c) {
 				auto &cValues = newValues[c];
 				auto &cTimes = newTimes[c];
 				InsertValues<TValue>(cTimes.size(), cTimes.data(), cValues.data(), 0.f, InsertFlags::None);
