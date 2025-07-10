@@ -94,7 +94,8 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 		if constexpr(is_animatable_type(udm::type_to_enum<TValue>())) {
 			std::vector<float> times;
 			std::vector<TValue> values;
-			GetDataInRange<TValue>(tStart, tEnd, times, values);
+			values.resize(5);
+			//GetDataInRange<TValue>(tStart, tEnd, times, values);
 
 			// We need to decimate each component of the value separately, then merge the reduced values
 			/*auto valueType = GetValueType();
