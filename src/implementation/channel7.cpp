@@ -102,7 +102,7 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 			else
 				values.resize(5, TValue {});*/
 			
-			//GetDataInRange<TValue>(tStart, tEnd, times, values);
+			GetDataInRange<TValue>(tStart, tEnd, times, values);
 
 			// We need to decimate each component of the value separately, then merge the reduced values
 			auto valueType = GetValueType();
@@ -132,13 +132,13 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 			}
 
 			// Clear values in the target range
-			//ClearRange(tStart, tEnd, true);
+			ClearRange(tStart, tEnd, true);
 
 			// Merge components back together
 			for(auto c = decltype(numComp) {0u}; c < numComp; ++c) {
 				auto &cValues = newValues[c];
 				auto &cTimes = newTimes[c];
-				//InsertValues<TValue>(cTimes.size(), cTimes.data(), cValues.data(), 0.f, InsertFlags::None);
+				InsertValues<TValue>(cTimes.size(), cTimes.data(), cValues.data(), 0.f, InsertFlags::None);
 			}
 		}
 	});

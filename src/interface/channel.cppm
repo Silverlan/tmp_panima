@@ -208,7 +208,7 @@ export namespace panima {
 			MergeDataArrays(
 			  times0.size(), times0.data(), reinterpret_cast<const uint8_t *>(values0.data()), times1.size(), times1.data(), reinterpret_cast<const uint8_t *>(values1.data()), outTimes,
 			  [&outValues](size_t size) -> uint8_t * {
-				  outValues.resize(size);
+				  outValues.resize(size, make_value<T>());
 				  return reinterpret_cast<uint8_t *>(outValues.data());
 			  },
 			  sizeof(T));
@@ -328,7 +328,7 @@ void panima::Channel::GetDataInRange(float tStart, float tEnd, std::vector<float
 	if(!is_binary_compatible_type(udm::type_to_enum<T>(), GetValueType()))
 		throw std::invalid_argument {"Requested data type does not match channel value type!"};
 	GetDataInRange(tStart, tEnd, &outTimes, [&outValues](size_t size) -> void * {
-		outValues.resize(size);
+		outValues.resize(size, make_value<T>());
 		return outValues.data();
 	});
 }
