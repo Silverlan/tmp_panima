@@ -94,9 +94,13 @@ void panima::Channel::Decimate(float tStart, float tEnd, float error)
 		if constexpr(is_animatable_type(udm::type_to_enum<TValue>())) {
 			std::vector<float> times;
 			
-			// If it doesnt error anymore, the error is caused by these two lines!
-			//std::vector<TValue> values;
-			//values.resize(5);
+			std::vector<TValue> values;
+			if constexpr(std::is_same_v<TValue, Vector2>)
+				values.resize(5, TValue {0.f, 0.f});
+			else if constexpr(std::is_same_v<TValue, Vector4>)
+				values.resize(5, TValue {0.f, 0.f, 0.f, 0.f});
+			else
+				values.resize(5, TValue {});
 			
 			//GetDataInRange<TValue>(tStart, tEnd, times, values);
 
